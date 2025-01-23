@@ -73,24 +73,22 @@ public class ItemInventory {
         }
     }
 
-    public void upgrade (Item item1, Item item2, Item item3) {
+    public Item upgrade (Item item1, Item item2, Item item3) {
         if (item1 == null || item2 == null || item3 == null) {
             System.out.println("Sorry, pal, can't combine null items:(");
         }
         Item upgradedItem = combine(item1, item2, item3);
-        System.out.println("Congrats! You have just upgraded your selected items into " + upgradedItem.getRarity() +
-                " (" + upgradedItem.getUpgradeCount() + ")");
         groupItems();
+        return upgradedItem;
     }
 
-    public void upgrade (Item item1, Item item2) {
+    public Item upgrade (Item item1, Item item2) {
         if (item1 == null || item2 == null) {
             System.out.println("Sorry, pal, can't combine null items:(");
         }
         Item upgradedItem = combine(item1, item2);
-        System.out.println("Congrats! You have just upgraded your selected items into " + upgradedItem.getRarity() +
-                " (" + upgradedItem.getUpgradeCount() + ")");
         groupItems();
+        return upgradedItem;
     }
 
     private boolean canCombine (Item item1, Item item2, Item item3) {
@@ -146,13 +144,7 @@ public class ItemInventory {
         itemsInventory.sort(Comparator.comparing(Item::getRarity).thenComparing(Item::getName));
     }
 
-    public String toString () {
-        String result = "Your lovely inventory <3 \n";
-        int k = 0;
-        for (Item item : itemsInventory) {
-            result += k + ". " + item.toString() + "\n";
-            k++;
-        }
-        return result;
-    }
+//    public boolean noMoreCombosLeft(){
+//
+//    }
 }

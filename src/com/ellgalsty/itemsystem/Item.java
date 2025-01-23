@@ -38,7 +38,7 @@ public class Item {
 
     public String toString() {
         if (rarity == Rarity.EPIC) {
-            return name + " (" + rarity.toString() + ")" + " " + upgradeCount;
+            return name + " (" + rarity.toString() + " " + upgradeCount + ")";
         }
         return name + " (" + rarity.toString() + ")";
     }
