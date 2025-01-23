@@ -41,7 +41,7 @@ public class ItemInventory {
 
     public Item combine (Item item1, Item item2, Item item3) {
         if (!canCombine(item1, item2, item3)) {
-            throw new IllegalArgumentException("Sorry, pal, can't combine these items:(");
+            throw new IllegalArgumentException("can't combine these items:(");
         }
         Rarity rarity = item1.getRarity();
         if (rarity == Rarity.COMMON || rarity == Rarity.GREAT || rarity == Rarity.RARE || rarity == Rarity.EPIC) {
@@ -55,7 +55,7 @@ public class ItemInventory {
 
     public Item combine (Item item1, Item item2) {
         if (!canCombine(item1, item2)) {
-            throw new IllegalArgumentException("Sorry, pal, can't combine these items:(");
+            throw new IllegalArgumentException("can't combine these items:(");
         }
         Rarity rarity = item1.getRarity();
         if (item1.getUpgradeCount() == 1) {
@@ -75,7 +75,7 @@ public class ItemInventory {
 
     public Item upgrade (Item item1, Item item2, Item item3) {
         if (item1 == null || item2 == null || item3 == null) {
-            System.out.println("Sorry, pal, can't combine null items:(");
+            System.out.println("can't combine null items:(");
         }
         Item upgradedItem = combine(item1, item2, item3);
         groupItems();
@@ -84,7 +84,7 @@ public class ItemInventory {
 
     public Item upgrade (Item item1, Item item2) {
         if (item1 == null || item2 == null) {
-            System.out.println("Sorry, pal, can't combine null items:(");
+            System.out.println("can't combine null items:(");
         }
         Item upgradedItem = combine(item1, item2);
         groupItems();

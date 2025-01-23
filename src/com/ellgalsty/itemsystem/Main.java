@@ -9,8 +9,9 @@ public class Main {
     private static final ItemInventory inventory = new ItemInventory();
     private final static Map<Rarity, Integer> rarityColorMap = new HashMap<Rarity, Integer>();
     private static final String indentation = "            ";
-    public static final int mainGameColor = 190;
-    public static final int roomOneMainColor = 154;
+    public static final int mainGameColor = 38;
+    public static final int roomOneMainColor = 57;
+    public static final int roomOneConversationColor = 111;
     public static final int roomTwoMainColor = 45;
     public static final int roomTwoConversationColor = 117;
     public static final int roomThreeMainColor = 200;
@@ -21,7 +22,7 @@ public class Main {
     public static final int mainTextColor = 225;
 
     static {
-        rarityColorMap.put(Rarity.COMMON, 191);
+        rarityColorMap.put(Rarity.COMMON, 222);
         rarityColorMap.put(Rarity.GREAT, 48);
         rarityColorMap.put(Rarity.RARE, 51);
         rarityColorMap.put(Rarity.EPIC, 93);
@@ -118,9 +119,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println(formatText(indentation + "THIS IS ROOM 1, PRESS ENTER TO READ WHAT TO DO...", roomOneMainColor));
-        storyTellingFormat(scanner, "If you are here...", roomOneMainColor);
-        storyTellingFormat(scanner, "...You want to get more items, huh...", roomOneMainColor);
-        storyTellingFormat(scanner, "...Then guess the hidden RARITY and get a CHEST!", roomOneMainColor);
+        storyTellingFormat(scanner, "If you are here...", roomOneConversationColor);
+        storyTellingFormat(scanner, "...You want to get more items, huh...", roomOneConversationColor);
+        storyTellingFormat(scanner, "...Then guess the hidden RARITY and get a CHEST!", roomOneConversationColor);
         storyTellingFormat(scanner, "...Or maybe LOSE, who knows...", errorMsgColor);
         System.out.println();
 
@@ -135,7 +136,7 @@ public class Main {
 
     private static void roomOneMainLogic () throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println(formatText(indentation + "SOOO, CHOOSE PAL:3", roomOneMainColor));
+        System.out.println(formatText(indentation + "SOOO, CHOOSE PAL:3", roomOneConversationColor));
         Thread.sleep(50);
         System.out.println(formatText(indentation.repeat(2) + "1. COMMON", rarityColorMap.get(Rarity.COMMON)));
         Thread.sleep(50);
@@ -153,7 +154,7 @@ public class Main {
         } else {
             loserMessage();
         }
-        System.out.println(formatText(indentation + "Press ENTER to leave this room", roomOneMainColor));
+        System.out.println(formatText(indentation + "Press ENTER to leave this room", roomOneConversationColor));
         scanner.nextLine();
     }
 
@@ -169,7 +170,6 @@ public class Main {
     private static void getChest () throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
         storyTellingFormat(scanner, "...WOW, I CAN'T BELIEVE IT!...", winMsgColor);
-        System.out.println();
         storyTellingFormat(scanner, "...YOU WON A CHEST!...", winMsgColor);
         Thread.sleep(50);
         System.out.println();
@@ -190,7 +190,6 @@ public class Main {
 
         storyTellingFormat(scanner, "The first item you won is... " + newItem1.toString(), winMsgColor);
         drawItem(newItem1.getRarity(), newItem1.getItemType());
-        scanner.nextLine();
         System.out.println();
         storyTellingFormat(scanner, "The second item you won is..." + newItem2.toString(), winMsgColor);
         drawItem(newItem2.getRarity(), newItem2.getItemType());
@@ -357,7 +356,7 @@ public class Main {
 
         System.out.println();
         System.out.println(formatText(indentation + "... Press ENTER to leave this room ...", roomTwoConversationColor));
-        scanner.nextLine();
+        scanner.hasNextLine();
     }
 
     private static void showInventory () {
@@ -380,20 +379,19 @@ public class Main {
     }
 
     public static void roomFour () throws InterruptedException {
+        Scanner scanner = new Scanner(System.in);
         System.out.println(formatText(indentation + "...Well, if you want to leave...", roomFourConversationColor));
-        Thread.sleep(750);
+        scanner.nextLine();
         System.out.println(formatText(indentation + "...just leave... BUT...", roomFourConversationColor));
-        Thread.sleep(750);
+        scanner.nextLine();
         System.out.print(formatText(indentation + "...know that there is someone else living their", roomFourConversationColor));
-        Thread.sleep(750);
-        System.out.print(formatText(" LEGENDARY ", rarityColorMap.get(Rarity.LEGENDARY)));
+        System.out.print(formatText(" LEGENDARY ", roomFourMainColor));
         System.out.println(formatText("life...", roomFourConversationColor));
-        Thread.sleep(750);
         System.out.print(formatText(indentation + "...with", roomFourConversationColor));
-        System.out.print(formatText(" LEGENDARY ", rarityColorMap.get(Rarity.LEGENDARY)));
+        System.out.print(formatText(" LEGENDARY ", roomFourMainColor));
         System.out.println(formatText(" items...", roomFourConversationColor));
-        Thread.sleep(750);
-        System.out.println(formatText(indentation + "...cause they STAYED...", roomFourMainColor));
+        scanner.nextLine();
+        System.out.println(formatText(indentation + "...just because they STAYED...", roomFourMainColor));
         System.exit(0);
     }
 
