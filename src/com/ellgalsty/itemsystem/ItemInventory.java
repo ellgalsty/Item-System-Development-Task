@@ -32,7 +32,7 @@ public class ItemInventory {
     }
 
     public Item getItemAt (int index) {
-        return itemsInventory.get(index);
+        return itemsInventory.get(index-1);
     }
 
     public ArrayList<Item> getItems () {

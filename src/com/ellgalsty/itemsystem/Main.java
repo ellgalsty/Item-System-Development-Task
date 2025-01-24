@@ -422,8 +422,8 @@ public class Main {
     private static int parseAndValidate (String input, ItemInventory inventory) throws IllegalArgumentException {
         try {
             int index = Integer.parseInt(input);
-            if (index < 0 || index >= inventory.getItems().size()) {
-                throw new IllegalArgumentException("Your input is out of bounds babe! Must be between 0 and " + (inventory.getItems().size() - 1));
+            if (index < 1 || index > inventory.getItems().size()) {
+                throw new IllegalArgumentException("Your input is out of bounds babe! Must be between 1 and " + (inventory.getItems().size() - 1));
             }
             return index;
         } catch (NumberFormatException e) {
