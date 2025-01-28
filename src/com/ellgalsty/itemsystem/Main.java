@@ -324,7 +324,7 @@ public class Main {
 
             if (index1 == index2 || (!userResponse3.isEmpty() && (Integer.parseInt(userResponse3) == index1
                     || Integer.parseInt(userResponse3) == index2))) {
-                throw new IllegalArgumentException("... NOPE, can't upgrade if you input the same numbers:3 ...");
+                throw new IllegalArgumentException("can't upgrade if you input the same numbers:3 ...");
             }
 
             if (userResponse3.isEmpty()) {
