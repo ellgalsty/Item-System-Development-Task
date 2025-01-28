@@ -1,5 +1,6 @@
 package com.ellgalsty.itemsystem;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Map;
@@ -35,69 +36,73 @@ public class Main {
             inventory.addItem(randomItemGenerator());
         }
 
+        Scanner scanner = new Scanner(System.in);
+
         while (true) {
             roomsConversation();
-            roomChoice();
+            roomChoice(scanner);
         }
     }
 
     public static void roomsConversation () throws InterruptedException {
         padding();
+
         // ROOM 1 -----------------> GET MORE ITEMS
-        System.out.print(formatText(indentation + "ROOM 1 ", mainGameColor));
+        formatWithoutNewLine(indentation + "ROOM 1 ", mainGameColor);
         for (int i = 0; i < 20; i++) {
-            System.out.print(formatText(" - ", mainGameColor));
+            formatWithoutNewLine(" - ", mainGameColor);
             Thread.sleep(50);
         }
-        System.out.println(formatText(" > GET MORE ITEMS", roomOneMainColor));
+        formatWithNewLine(" > GET MORE ITEMS", roomOneMainColor);
 
         // ROOM 2 -----------------> UPGRADE YOUR ITEMS
-        System.out.print(formatText(indentation + "ROOM 2 ", mainGameColor));
+        formatWithoutNewLine(indentation + "ROOM 2 ", mainGameColor);
         for (int i = 0; i < 20; i++) {
-            System.out.print(formatText(" - ", mainGameColor));
+            formatWithoutNewLine(" - ", mainGameColor);
             Thread.sleep(50);
         }
-        System.out.println(formatText(" > UPGRADE YOUR ITEMS", roomTwoMainColor));
+        formatWithNewLine(" > UPGRADE YOUR ITEMS", roomTwoMainColor);
 
         // ROOM 3 -----------------> SEE YOUR INVENTORY
-        System.out.print(formatText(indentation + "ROOM 3 ", mainGameColor));
+        formatWithoutNewLine(indentation + "ROOM 3 ", mainGameColor);
         for (int i = 0; i < 20; i++) {
-            System.out.print(formatText(" - ", mainGameColor));
+            formatWithoutNewLine(" - ", mainGameColor);
             Thread.sleep(50);
         }
-        System.out.println(formatText(" > SEE YOUR INVENTORY", roomThreeMainColor));
+        formatWithNewLine(" > SEE YOUR INVENTORY", roomThreeMainColor);
 
         // ROOM 4 -----------------> LEAVE
-        System.out.print(formatText(indentation + "ROOM 4 ", mainGameColor));
+        formatWithoutNewLine(indentation + "ROOM 4 ", mainGameColor);
         for (int i = 0; i < 20; i++) {
-            System.out.print(formatText(" - ", mainGameColor));
+            formatWithoutNewLine(" - ", mainGameColor);
             Thread.sleep(50);
         }
-        System.out.println(formatText(" > LEAVE", roomFourMainColor));
+        formatWithNewLine(" > LEAVE", roomFourMainColor);
         // choose the room by a number
-        System.out.println(formatText(indentation.repeat(3) + "CHOOSE A ROOM BABE 1/2/3/4 : ", mainGameColor));
+        formatWithNewLine(indentation.repeat(3) + "CHOOSE A ROOM BABE 1/2/3/4 : ", mainGameColor);
     }
 
-    public static void roomChoice () throws InputMismatchException, IndexOutOfBoundsException, InterruptedException {
-        int choice;
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
+    public static void roomChoice (Scanner scanner) throws InputMismatchException, IndexOutOfBoundsException, InterruptedException {
+        int choice = 0;
+        boolean correctAnswer = false;
+        while (!correctAnswer) {
             try {
                 choice = choiceValidateAndReturn(scanner, 1, 4);
-                break;
+                correctAnswer = true;
             } catch (InputMismatchException | IndexOutOfBoundsException e) {
                 System.out.println(indentation + formatText(e.getMessage(), errorMsgColor));
+                scanner.nextLine();
             }
         }
 
         if (choice == 1) {
-            roomOne();
+            roomOne(scanner);
         } else if (choice == 2) {
-            roomTwo();
+            roomTwo(scanner);
         } else if (choice == 3) {
-            roomThree();
+            roomThree(scanner);
         } else {
-            roomFour();
+            roomFour(scanner);
         }
     }
 
@@ -114,61 +119,57 @@ public class Main {
         }
     }
 
-    public static void roomOne () throws InterruptedException {
+    public static void roomOne (Scanner scanner) throws InterruptedException {
         padding();
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println(formatText(indentation + "THIS IS ROOM 1, PRESS ENTER TO READ WHAT TO DO...", roomOneMainColor));
+        formatWithNewLine(indentation + "THIS IS ROOM 1, PRESS ENTER TO READ WHAT TO DO...", roomOneMainColor);
+        scanner.nextLine();
         storyTellingFormat(scanner, "If you are here...", roomOneConversationColor);
         storyTellingFormat(scanner, "...You want to get more items, huh...", roomOneConversationColor);
         storyTellingFormat(scanner, "...Then guess the hidden RARITY and get a CHEST!", roomOneConversationColor);
         storyTellingFormat(scanner, "...Or maybe LOSE, who knows...", errorMsgColor);
         System.out.println();
 
-        roomOneMainLogic();
+        roomOneMainLogic(scanner);
     }
 
     private static void storyTellingFormat (Scanner scanner, String message, int color) {
         if (scanner.nextLine().isEmpty()) {
-            System.out.println(formatText(indentation + message, color));
+            formatWithNewLine(indentation + message, color);
         }
     }
 
-    private static void roomOneMainLogic () throws InterruptedException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(formatText(indentation + "SOOO, CHOOSE PAL:3", roomOneConversationColor));
+    private static void roomOneMainLogic (Scanner scanner) throws InterruptedException {
+        formatWithNewLine(indentation + "SOOO, CHOOSE PAL:3", roomOneConversationColor);
         Thread.sleep(50);
-        System.out.println(formatText(indentation.repeat(2) + "1. COMMON", rarityColorMap.get(Rarity.COMMON)));
+        formatWithNewLine(indentation.repeat(2) + "1. COMMON", rarityColorMap.get(Rarity.COMMON));
         Thread.sleep(50);
-        System.out.println(formatText(indentation.repeat(2) + "2. GREAT", rarityColorMap.get(Rarity.GREAT)));
+        formatWithNewLine(indentation.repeat(2) + "2. GREAT", rarityColorMap.get(Rarity.GREAT));
         Thread.sleep(50);
-        System.out.println(formatText(indentation.repeat(2) + "3. RARE", rarityColorMap.get(Rarity.RARE)));
+        formatWithNewLine(indentation.repeat(2) + "3. RARE", rarityColorMap.get(Rarity.RARE));
         Thread.sleep(50);
-        System.out.println(formatText(indentation.repeat(2) + "4. EPIC", rarityColorMap.get(Rarity.EPIC)));
+        formatWithNewLine(indentation.repeat(2) + "4. EPIC", rarityColorMap.get(Rarity.EPIC));
         Thread.sleep(50);
-        System.out.println(formatText(indentation.repeat(2) + "5. LEGENDARY", rarityColorMap.get(Rarity.LEGENDARY)));
+        formatWithNewLine(indentation.repeat(2) + "5. LEGENDARY", rarityColorMap.get(Rarity.LEGENDARY));
         int actualRarityNum = generateRandomRarity();
         int choice = choiceValidateAndReturn(scanner, 1, 5);
         if (choice == actualRarityNum) {
-            getChest();
+            getChest(scanner);
         } else {
-            loserMessage();
+            loserMessage(scanner);
         }
-        System.out.println(formatText(indentation + "Press ENTER to leave this room", roomOneConversationColor));
+        formatWithNewLine(indentation + "Press ENTER to leave this room", roomOneConversationColor);
         scanner.nextLine();
     }
 
-    private static void loserMessage () throws InterruptedException {
-        Scanner scanner = new Scanner(System.in);
+    private static void loserMessage (Scanner scanner) throws InterruptedException {
         do {
-            System.out.println(formatText(indentation.repeat(3) + "...YOU LOST MWUAHAHA...", errorMsgColor));
+            formatWithNewLine(indentation + "YOU LOST MWUAHAHA...", errorMsgColor);
             System.out.println();
-            System.out.println(formatText(indentation.repeat(3) + "GET OUT OF HERE, LOSER!", errorMsgColor));
+            formatWithNewLine(indentation + "...GET OUT OF HERE, LOSER!", errorMsgColor);
         } while (!scanner.nextLine().isEmpty());
     }
 
-    private static void getChest () throws InterruptedException {
-        Scanner scanner = new Scanner(System.in);
+    private static void getChest (Scanner scanner) throws InterruptedException {
         storyTellingFormat(scanner, "...WOW, I CAN'T BELIEVE IT!...", winMsgColor);
         storyTellingFormat(scanner, "...YOU WON A CHEST!...", winMsgColor);
         Thread.sleep(50);
@@ -193,10 +194,10 @@ public class Main {
         System.out.println();
         storyTellingFormat(scanner, "The second item you won is..." + newItem2.toString(), winMsgColor);
         drawItem(newItem2.getRarity(), newItem2.getItemType());
-        scanner.nextLine();
         System.out.println();
         storyTellingFormat(scanner, "The last item you won is..." + newItem3.toString(), winMsgColor);
         drawItem(newItem3.getRarity(), newItem3.getItemType());
+        scanner.nextLine();
 
         inventory.addItem(newItem1);
         inventory.addItem(newItem2);
@@ -216,68 +217,68 @@ public class Main {
     }
 
     private static void drawAccessory (Integer color) {
-        System.out.println(formatText(indentation + "*****************", color));
-        System.out.println(formatText(indentation + "*     *   *     *", color));
-        System.out.println(formatText(indentation + "*    *** ***    *", color));
-        System.out.println(formatText(indentation + "*   *********   *", color));
-        System.out.println(formatText(indentation + "*    *******    *", color));
-        System.out.println(formatText(indentation + "*     *****     *", color));
-        System.out.println(formatText(indentation + "*       *       *", color));
-        System.out.println(formatText(indentation + "*****************", color));
+        formatWithNewLine(indentation + "*****************", color);
+        formatWithNewLine(indentation + "*     *   *     *", color);
+        formatWithNewLine(indentation + "*    *** ***    *", color);
+        formatWithNewLine(indentation + "*   *********   *", color);
+        formatWithNewLine(indentation + "*    *******    *", color);
+        formatWithNewLine(indentation + "*     *****     *", color);
+        formatWithNewLine(indentation + "*       *       *", color);
+        formatWithNewLine(indentation + "*****************", color);
     }
 
     private static void drawRing (Integer color) {
-        System.out.println(formatText(indentation + "*****************", color));
-        System.out.println(formatText(indentation + "*     *******   *", color));
-        System.out.println(formatText(indentation + "*       ***     *", color));
-        System.out.println(formatText(indentation + "*     *     *   *", color));
-        System.out.println(formatText(indentation + "*    *       *  * ", color));
-        System.out.println(formatText(indentation + "*     *     *   *", color));
-        System.out.println(formatText(indentation + "*       ***     *", color));
-        System.out.println(formatText(indentation + "*****************", color));
+        formatWithNewLine(indentation + "*****************", color);
+        formatWithNewLine(indentation + "*     *******   *", color);
+        formatWithNewLine(indentation + "*       ***     *", color);
+        formatWithNewLine(indentation + "*     *     *   *", color);
+        formatWithNewLine(indentation + "*    *       *  * ", color);
+        formatWithNewLine(indentation + "*     *     *   *", color);
+        formatWithNewLine(indentation + "*       ***     *", color);
+        formatWithNewLine(indentation + "*****************", color);
     }
 
     private static void drawWeapon (Integer color) {
-        System.out.println(formatText(indentation + "*****************", color));
-        System.out.println(formatText(indentation + "*       *       *", color));
-        System.out.println(formatText(indentation + "*      * *      *", color));
-        System.out.println(formatText(indentation + "*      * *      *", color));
-        System.out.println(formatText(indentation + "*      * *      *", color));
-        System.out.println(formatText(indentation + "*     *****     *", color));
-        System.out.println(formatText(indentation + "*       *       *", color));
-        System.out.println(formatText(indentation + "*****************", color));
+        formatWithNewLine(indentation + "*****************", color);
+        formatWithNewLine(indentation + "*       *       *", color);
+        formatWithNewLine(indentation + "*      * *      *", color);
+        formatWithNewLine(indentation + "*      * *      *", color);
+        formatWithNewLine(indentation + "*      * *      *", color);
+        formatWithNewLine(indentation + "*     *****     *", color);
+        formatWithNewLine(indentation + "*       *       *", color);
+        formatWithNewLine(indentation + "*****************", color);
     }
 
     private static void drawWear (Integer color) {
-        System.out.println(formatText(indentation + "*****************", color));
-        System.out.println(formatText(indentation + "*   ***   ***   *", color));
-        System.out.println(formatText(indentation + "*  *   ***   *  *", color));
-        System.out.println(formatText(indentation + "*  *         *  *", color));
-        System.out.println(formatText(indentation + "*  *         *  *", color));
-        System.out.println(formatText(indentation + "*  ***********  *", color));
-        System.out.println(formatText(indentation + "*               *", color));
-        System.out.println(formatText(indentation + "*****************", color));
+        formatWithNewLine(indentation + "*****************", color);
+        formatWithNewLine(indentation + "*   ***   ***   *", color);
+        formatWithNewLine(indentation + "*  *   ***   *  *", color);
+        formatWithNewLine(indentation + "*  *         *  *", color);
+        formatWithNewLine(indentation + "*  *         *  *", color);
+        formatWithNewLine(indentation + "*  ***********  *", color);
+        formatWithNewLine(indentation + "*               *", color);
+        formatWithNewLine(indentation + "*****************", color);
     }
 
 
     private static void drawChest () throws InterruptedException {
-        System.out.println(formatText(indentation + "    ********************************", 214));
+        formatWithNewLine(indentation + "    ********************************", 214);
         Thread.sleep(40);
-        System.out.println(formatText(indentation + "   *                              **", 214));
+        formatWithNewLine(indentation + "   *                              **", 214);
         Thread.sleep(40);
-        System.out.println(formatText(indentation + "  *          * *                *  *", 48));
+        formatWithNewLine(indentation + "  *          * *                *  *", 48);
         Thread.sleep(40);
-        System.out.println(formatText(indentation + " *         * * * *            *    *", 48));
+        formatWithNewLine(indentation + " *         * * * *            *    *", 48);
         Thread.sleep(40);
-        System.out.println(formatText(indentation + "* ****************************     *", 51));
+        formatWithNewLine(indentation + "* ****************************     *", 51);
         Thread.sleep(40);
-        System.out.println(formatText(indentation + "*          * * * *           *     *", 51));
+        formatWithNewLine(indentation + "*          * * * *           *     *", 51);
         Thread.sleep(40);
-        System.out.println(formatText(indentation + "*            * *             *     *", 93));
+        formatWithNewLine(indentation + "*            * *             *     *", 93);
         Thread.sleep(40);
-        System.out.println(formatText(indentation + "*                            *     *", 93));
+        formatWithNewLine(indentation + "*                            *     *", 93);
         Thread.sleep(40);
-        System.out.println(formatText(indentation + "************************************", 178));
+        formatWithNewLine(indentation + "************************************", 178);
     }
 
     private static int generateRandomRarity () {
@@ -297,35 +298,33 @@ public class Main {
         return rarityNum;
     }
 
-    public static void roomTwo () throws InterruptedException {
+    public static void roomTwo (Scanner scanner) throws InterruptedException {
         padding();
-        Scanner scanner = new Scanner(System.in);
         String response;
-        System.out.println(formatText(indentation + "THIS IS ROOM 2, PRESS ENTER TO READ WHAT TO DO...", roomTwoMainColor));
-        System.out.println();
+        formatWithNewLine(indentation + "THIS IS ROOM 2, PRESS ENTER TO READ WHAT TO DO...", roomTwoMainColor);
+        scanner.nextLine();
         storyTellingFormat(scanner, "If you are here...", roomTwoConversationColor);
         storyTellingFormat(scanner, "...You want to UPGRADE your items...", roomTwoConversationColor);
         storyTellingFormat(scanner, "...Well, let's upgrade them for you!...", roomTwoConversationColor);
         System.out.println();
-        roomTwoMainLogic();
+        roomTwoMainLogic(scanner);
     }
 
-    private static void roomTwoMainLogic () throws InterruptedException {
+    private static void roomTwoMainLogic (Scanner scanner) throws InterruptedException {
         padding();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(formatText(indentation + "... SO, CHOOSE PAL, which items to upgrade:3 ...", roomTwoConversationColor));
+        formatWithNewLine(indentation + "... SO, CHOOSE PAL, which items to upgrade:3 ...", roomTwoConversationColor);
         System.out.println();
         System.out.println();
-        System.out.println(formatText(indentation + "<<<<<<<YOUR INVENTORY>>>>>>", roomTwoMainColor));
+        formatWithNewLine(indentation + "<<<<<<<YOUR INVENTORY>>>>>>", roomTwoMainColor);
         showInventory();
 
         try {
-            System.out.print(formatText(indentation + "1st item to upgrade: ", roomTwoConversationColor));
+            formatWithoutNewLine(indentation + "1st item to upgrade: ", roomTwoConversationColor);
             int index1 = getValidIndex(scanner, inventory);
-            System.out.print(formatText(indentation + "2nd item to upgrade: ", roomTwoConversationColor));
+            formatWithoutNewLine(indentation + "2nd item to upgrade: ", roomTwoConversationColor);
             int index2 = getValidIndex(scanner, inventory);
 
-            System.out.print(formatText(indentation + "3rd item to upgrade (OPTIONAL): ", roomTwoConversationColor));
+            formatWithoutNewLine(indentation + "3rd item to upgrade (OPTIONAL): ", roomTwoConversationColor);
             String userResponse3 = scanner.nextLine();
 
             if (index1 == index2 || (!userResponse3.isEmpty() && (Integer.parseInt(userResponse3) == index1
@@ -338,8 +337,8 @@ public class Main {
                 Item upgradedItem = inventory.upgrade(
                         inventory.getItemAt(index1),
                         inventory.getItemAt(index2));
-                System.out.println(formatText(indentation + "... Congrats! You have just upgraded your first selected item into <<"
-                        + upgradedItem.toString() + ">>   <3 ...", rarityColorMap.get(upgradedItem.getRarity())));
+                formatWithNewLine(indentation + "... Congrats! You have just upgraded your first selected item into <<"
+                        + upgradedItem.toString() + ">>   <3 ...", rarityColorMap.get(upgradedItem.getRarity()));
             } else {
                 int index3 = parseAndValidate(userResponse3, inventory);
                 // upgrade with 3 items
@@ -347,51 +346,49 @@ public class Main {
                         inventory.getItemAt(index1),
                         inventory.getItemAt(index2),
                         inventory.getItemAt(index3));
-                System.out.println(formatText(indentation + "... Congrats! You have just upgraded your first selected item into <<"
-                        + upgradedItem.toString() + ">>   <3 ...", rarityColorMap.get(upgradedItem.getRarity())));
+                formatWithNewLine(indentation + "... Congrats! You have just upgraded your first selected item into <<"
+                        + upgradedItem.toString() + ">>   <3 ...", rarityColorMap.get(upgradedItem.getRarity()));
             }
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-            System.out.println(formatText(indentation + "... This is obviously invalid input, babe: " + e.getMessage(), errorMsgColor));
+            formatWithNewLine(indentation + "... This is obviously invalid input, babe: " + e.getMessage(), errorMsgColor);
         }
 
         System.out.println();
-        System.out.println(formatText(indentation + "... Press ENTER to leave this room ...", roomTwoConversationColor));
+        formatWithNewLine(indentation + "... Press ENTER to leave this room ...", roomTwoConversationColor);
         scanner.hasNextLine();
     }
 
     private static void showInventory () {
         int k = 1;
         for (Item item : inventory.getItems()) {
-            System.out.println(formatText(k + ". " + item.toString(), rarityColorMap.get(item.getRarity())));
+            formatWithNewLine(k + ". " + item.toString(), rarityColorMap.get(item.getRarity()));
             System.out.println();
             k++;
         }
     }
 
-    public static void roomThree () {
+    public static void roomThree (Scanner scanner) throws InterruptedException {
         padding();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(formatText(indentation + "THIS IS ROOM 3, PRESS ENTER TO SEE YOUR INVENTORY...", roomThreeMainColor));
+        formatWithNewLine(indentation + "THIS IS ROOM 3, PRESS ENTER TO SEE YOUR INVENTORY...", roomThreeMainColor);
         scanner.nextLine();
         showInventory();
-        System.out.println(formatText(indentation + "Press ENTER to leave this room", roomThreeMainColor));
+        formatWithNewLine(indentation + "Press ENTER to leave this room", roomThreeMainColor);
         scanner.nextLine();
     }
 
-    public static void roomFour () throws InterruptedException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(formatText(indentation + "...Well, if you want to leave...", roomFourConversationColor));
+    public static void roomFour (Scanner scanner) throws InterruptedException {
+        formatWithNewLine(indentation + "...Well, if you want to leave...", roomFourConversationColor);
         scanner.nextLine();
-        System.out.println(formatText(indentation + "...just leave... BUT...", roomFourConversationColor));
+        formatWithNewLine(indentation + "...just leave... BUT...", roomFourConversationColor);
         scanner.nextLine();
-        System.out.print(formatText(indentation + "...know that there is someone else living their", roomFourConversationColor));
-        System.out.print(formatText(" LEGENDARY ", roomFourMainColor));
-        System.out.println(formatText("life...", roomFourConversationColor));
-        System.out.print(formatText(indentation + "...with", roomFourConversationColor));
-        System.out.print(formatText(" LEGENDARY ", roomFourMainColor));
-        System.out.println(formatText(" items...", roomFourConversationColor));
+        formatWithoutNewLine(indentation + "...know that there is someone else living their", roomFourConversationColor);
+        formatWithoutNewLine(" LEGENDARY ", roomFourMainColor);
+        formatWithNewLine("life...", roomFourConversationColor);
+        formatWithoutNewLine(indentation + "...with", roomFourConversationColor);
+        formatWithoutNewLine(" LEGENDARY ", roomFourMainColor);
+        formatWithNewLine(" items...", roomFourConversationColor);
         scanner.nextLine();
-        System.out.println(formatText(indentation + "...just because they STAYED...", roomFourMainColor));
+        formatWithNewLine(indentation + "...just because they STAYED...", roomFourMainColor);
         System.exit(0);
     }
 
@@ -399,10 +396,6 @@ public class Main {
         for (int i = 0; i < 5; i++) {
             System.out.println();
         }
-    }
-
-    private static String formatText (String text, int color) {
-        return "\033[38;5;" + String.valueOf(color) + "m" + text + "\033[0m";
     }
 
     // to get a valid index from the user
@@ -413,11 +406,22 @@ public class Main {
             try {
                 return parseAndValidate(input, inventory);
             } catch (IllegalArgumentException e) {
-                System.out.println(formatText(indentation + e.getMessage(), errorMsgColor));
+                formatWithNewLine(indentation + e.getMessage(), errorMsgColor);
             }
         }
     }
 
+    private static String formatText (String text, int color) {
+        return "\033[38;5;" + String.valueOf(color) + "m" + text + "\033[0m";
+    }
+
+    private static void formatWithNewLine (String text, int color) {
+        System.out.println(formatText(text, color));
+    }
+
+    private static void formatWithoutNewLine (String text, int color) {
+        System.out.print(formatText(text, color));
+    }
     // to parse and validate an input string
     private static int parseAndValidate (String input, ItemInventory inventory) throws IllegalArgumentException {
         try {
@@ -447,5 +451,4 @@ public class Main {
         }
         return newItem;
     }
-
 }

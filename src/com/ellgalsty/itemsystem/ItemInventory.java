@@ -118,11 +118,7 @@ public class ItemInventory {
         if (!haveEpicRarity(item1, item2)) {
             return false;
         }
-        if (item1.getUpgradeCount() == 1 || item2.getUpgradeCount() == 1) {
-            return true;
-        } else {
-            return true;
-        }
+        return true;
     }
 
     private boolean haveSameRarity (Item item1, Item item2, Item item3) {
@@ -143,8 +139,4 @@ public class ItemInventory {
     public void groupItems () {
         itemsInventory.sort(Comparator.comparing(Item::getRarity).thenComparing(Item::getName));
     }
-
-//    public boolean noMoreCombosLeft(){
-//
-//    }
 }
