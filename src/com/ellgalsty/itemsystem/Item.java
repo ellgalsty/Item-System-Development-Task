@@ -12,6 +12,12 @@ public class Item {
         this.itemType = itemType;
         upgradeCount = 0;
     }
+    public Item(String name, Rarity rarity, ItemType itemType, int upgradeCount) {
+        this.name = name;
+        this.rarity = rarity;
+        this.itemType = itemType;
+        this.upgradeCount = upgradeCount;
+    }
 
     public String getName() {
         return name;

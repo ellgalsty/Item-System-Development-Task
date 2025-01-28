@@ -1,10 +1,7 @@
 package com.ellgalsty.itemsystem;
 
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     private static final ItemInventory inventory = new ItemInventory();
@@ -35,6 +32,7 @@ public class Main {
         for (int i = 0; i < 9; i++) {
             inventory.addItem(randomItemGenerator());
         }
+        test();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -450,5 +448,66 @@ public class Main {
             newItem = new Item("Demon's ring", Rarity.LEGENDARY, ItemType.RING);
         }
         return newItem;
+    }
+
+    private static void test () {
+        ItemInventory inventory = new ItemInventory();
+
+        inventory.addItem(new Item("Sword", Rarity.COMMON, ItemType.WEAPON));
+        inventory.addItem(new Item("Sword", Rarity.COMMON, ItemType.WEAPON));
+        inventory.addItem(new Item("Sword", Rarity.COMMON, ItemType.WEAPON));
+        inventory.addItem(new Item("Bow", Rarity.GREAT, ItemType.WEAPON));
+        inventory.addItem(new Item("Bow", Rarity.GREAT, ItemType.WEAPON));
+        inventory.addItem(new Item("Dagger", Rarity.RARE, ItemType.WEAPON));
+
+        System.out.println("Inventory after adding items:");
+        printInventory(inventory);
+
+        System.out.println("\nTesting invalid upgrade cases...");
+        try {
+            inventory.upgrade(new Item("Sword", Rarity.GREAT, ItemType.WEAPON), new Item("Sword", Rarity.GREAT, ItemType.WEAPON));
+        } catch (IllegalArgumentException e) {
+            System.out.println("✔️ Caught expected error: " + e.getMessage());
+        }
+        try {
+            inventory.upgrade(new Item("Sword", Rarity.EPIC, ItemType.WEAPON, 2), new Item("Sword", Rarity.EPIC, ItemType.WEAPON, 2));
+        } catch (IllegalArgumentException e) {
+            System.out.println("✔️ Caught expected error: " + e.getMessage());
+        }
+        try {
+            inventory.upgrade(inventory.getItemAt(1), inventory.getItemAt(2), inventory.getItemAt(5));
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("✔️ Caught expected error: " + e.getMessage());
+        }
+
+        System.out.println("\nTesting valid upgrade cases...");
+        try {
+            inventory.upgrade(inventory.getItemAt(1), inventory.getItemAt(2), inventory.getItemAt(3));
+            System.out.println("✔️ Successfully upgraded COMMON -> GREAT");
+        } catch (IllegalArgumentException e) {
+            System.out.println("❌ Unexpected error: " + e.getMessage());
+        }
+
+        System.out.println("\nTesting adding items...");
+        System.out.println("Inventory before adding items:");
+        printInventory(inventory);
+        inventory.addItem(new Item("Sword", Rarity.RARE, ItemType.WEAPON));
+        System.out.println("\nInventory after adding items:");
+        printInventory(inventory);
+
+        System.out.println("\nTesting removing items...");
+        System.out.println("Inventory before removing the first item:");
+        printInventory(inventory);
+        inventory.removeItem(inventory.getItemAt(1));
+        System.out.println("\nInventory after removing the first item:");
+        printInventory(inventory);
+    }
+
+    private static void printInventory(ItemInventory inventory) {
+        System.out.println("\nCurrent Inventory:");
+        for (int i = 0; i < inventory.getItems().size(); i++) {
+            System.out.println(i + ": " + inventory.getItems().get(i));
+        }
     }
 }

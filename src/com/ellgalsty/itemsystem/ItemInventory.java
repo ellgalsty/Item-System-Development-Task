@@ -118,6 +118,9 @@ public class ItemInventory {
         if (!haveEpicRarity(item1, item2)) {
             return false;
         }
+        if(item1.getUpgradeCount() == 2 && item2.getUpgradeCount() == 2) {
+            return false;
+        }
         return true;
     }
 
