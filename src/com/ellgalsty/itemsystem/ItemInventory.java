@@ -57,7 +57,6 @@ public class ItemInventory {
         if (!canCombine(item1, item2)) {
             throw new IllegalArgumentException("can't combine these items:(");
         }
-        Rarity rarity = item1.getRarity();
         if (item1.getUpgradeCount() == 1) {
             item1.upgrade();
             removeItem(item2);

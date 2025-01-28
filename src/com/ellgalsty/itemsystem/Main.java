@@ -1,11 +1,10 @@
 package com.ellgalsty.itemsystem;
 
-import java.io.InputStream;
 import java.util.*;
 
 public class Main {
     private static final ItemInventory inventory = new ItemInventory();
-    private final static Map<Rarity, Integer> rarityColorMap = new HashMap<Rarity, Integer>();
+    private final static Map<Rarity, Integer> rarityColorMap = new HashMap<>();
     private static final String indentation = "            ";
     public static final int mainGameColor = 38;
     public static final int roomOneMainColor = 57;
@@ -32,7 +31,6 @@ public class Main {
         for (int i = 0; i < 9; i++) {
             inventory.addItem(randomItemGenerator());
         }
-        test();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -159,7 +157,7 @@ public class Main {
         scanner.nextLine();
     }
 
-    private static void loserMessage (Scanner scanner) throws InterruptedException {
+    private static void loserMessage (Scanner scanner) {
         do {
             formatWithNewLine(indentation + "YOU LOST MWUAHAHA...", errorMsgColor);
             System.out.println();
@@ -182,18 +180,18 @@ public class Main {
         getChestMainLogic(scanner);
     }
 
-    private static void getChestMainLogic (Scanner scanner) throws InterruptedException {
+    private static void getChestMainLogic (Scanner scanner) {
         Item newItem1 = randomItemGenerator();
         Item newItem2 = randomItemGenerator();
         Item newItem3 = randomItemGenerator();
 
-        storyTellingFormat(scanner, "The first item you won is... " + newItem1.toString(), winMsgColor);
+        storyTellingFormat(scanner, "The first item you won is... " + newItem1, winMsgColor);
         drawItem(newItem1.getRarity(), newItem1.getItemType());
         System.out.println();
-        storyTellingFormat(scanner, "The second item you won is..." + newItem2.toString(), winMsgColor);
+        storyTellingFormat(scanner, "The second item you won is..." + newItem2, winMsgColor);
         drawItem(newItem2.getRarity(), newItem2.getItemType());
         System.out.println();
-        storyTellingFormat(scanner, "The last item you won is..." + newItem3.toString(), winMsgColor);
+        storyTellingFormat(scanner, "The last item you won is..." + newItem3, winMsgColor);
         drawItem(newItem3.getRarity(), newItem3.getItemType());
         scanner.nextLine();
 
@@ -296,9 +294,8 @@ public class Main {
         return rarityNum;
     }
 
-    public static void roomTwo (Scanner scanner) throws InterruptedException {
+    public static void roomTwo (Scanner scanner) {
         padding();
-        String response;
         formatWithNewLine(indentation + "THIS IS ROOM 2, PRESS ENTER TO READ WHAT TO DO...", roomTwoMainColor);
         scanner.nextLine();
         storyTellingFormat(scanner, "If you are here...", roomTwoConversationColor);
@@ -308,7 +305,7 @@ public class Main {
         roomTwoMainLogic(scanner);
     }
 
-    private static void roomTwoMainLogic (Scanner scanner) throws InterruptedException {
+    private static void roomTwoMainLogic (Scanner scanner) {
         padding();
         formatWithNewLine(indentation + "... SO, CHOOSE PAL, which items to upgrade:3 ...", roomTwoConversationColor);
         System.out.println();
@@ -365,7 +362,7 @@ public class Main {
         }
     }
 
-    public static void roomThree (Scanner scanner) throws InterruptedException {
+    public static void roomThree (Scanner scanner) {
         padding();
         formatWithNewLine(indentation + "THIS IS ROOM 3, PRESS ENTER TO SEE YOUR INVENTORY...", roomThreeMainColor);
         scanner.nextLine();
@@ -374,7 +371,7 @@ public class Main {
         scanner.nextLine();
     }
 
-    public static void roomFour (Scanner scanner) throws InterruptedException {
+    public static void roomFour (Scanner scanner) {
         formatWithNewLine(indentation + "...Well, if you want to leave...", roomFourConversationColor);
         scanner.nextLine();
         formatWithNewLine(indentation + "...just leave... BUT...", roomFourConversationColor);
@@ -410,7 +407,7 @@ public class Main {
     }
 
     private static String formatText (String text, int color) {
-        return "\033[38;5;" + String.valueOf(color) + "m" + text + "\033[0m";
+        return "\033[38;5;" + color + "m" + text + "\033[0m";
     }
 
     private static void formatWithNewLine (String text, int color) {
